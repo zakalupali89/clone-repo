@@ -5,7 +5,6 @@ import { GetServerSideProps } from 'next';
 import { getToken } from 'next-auth/jwt';
 import Link from 'next/link';
 import { signOut } from 'next-auth/react';
-import { useRouter } from 'next/router';
 import NamesClients from '@/src/helpers/commercetools/consts';
 
 type Props = {
@@ -13,7 +12,6 @@ type Props = {
 };
 
 export default function Home({ authorized }: Props) {
-  const router = useRouter();
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
@@ -30,8 +28,7 @@ export default function Home({ authorized }: Props) {
         <Button
           variant="contained"
           onClick={async () => {
-            await signOut({ redirect: false });
-            router.push('/');
+            await signOut();
           }}
         >
           Logout

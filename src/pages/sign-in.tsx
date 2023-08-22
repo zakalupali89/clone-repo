@@ -2,7 +2,7 @@ import { Stack, Button, Typography } from '@mui/material';
 import { FieldError, SubmitHandler, useForm } from 'react-hook-form';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { signIn } from 'next-auth/react';
+import {signIn, useSession} from 'next-auth/react';
 import {toast} from "react-toastify";
 import ErrorMessage from '@/src/components/ErrorMessage';
 import NamesClients from '@/src/helpers/commercetools/consts';
@@ -26,6 +26,8 @@ const showError = (message: string) => {
 };
 
 function SignInPage() {
+  const {update} = useSession();
+
   const form = useForm<IFormInput>({
     defaultValues: {
       email: '',
@@ -57,6 +59,7 @@ function SignInPage() {
 
       clearErrors('root');
       if (result?.ok) {
+        await update();
         router.push(`/`);
         showSuccess();
       }
