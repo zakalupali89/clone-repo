@@ -140,5 +140,6 @@ export default function Home({ authorized }: Props) {
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({ req }) => {
   const authorized = (await getToken({ req }))?.type === NamesClients.PASSWORD;
+  console.log(authorized)
   return { props: { authorized } };
 };
