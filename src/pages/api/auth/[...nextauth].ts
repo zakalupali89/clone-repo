@@ -82,7 +82,7 @@ export const authOptions: AuthOptions = {
             throw new Error('Oops, something went wrong, try again later');
           }
         }
-
+        console.log('token',tokenCache.get());
         const { id, firstName, email } = customer.body.customer;
         return {
           id,
