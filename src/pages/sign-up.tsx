@@ -9,14 +9,14 @@ import createCustomerDraft from '@/src/helpers/commercetools/customerDraft';
 import ErrorMessage from '@/src/components/ErrorMessage';
 import NamesClients from '@/src/helpers/commercetools/consts';
 import { IFormInput } from '@/src/interfaces/IFormInput';
+import signUpForCrosscheck from "@/src/api/signUpForCrossCheck";
+import {getTokenForCrosscheck, signInForCrosscheck} from "@/src/api/signInForCrossCheck";
 import InputEmail from '../components/InputEmail';
 import InputPassword from '../components/InputPassword';
 import InputFirstName from '../components/InputFirstName';
 import InputLastName from '../components/InputLastName';
 import Address from '../components/Address';
 import InputDate from '../components/InputDate';
-import { signUpForCrosscheck} from "@/src/api/signUpForCrossCheck";
-import {getTokenForCrosscheck, signInForCrosscheck} from "@/src/api/signInForCrossCheck";
 
 function SignUpPage() {
   const form = useForm<IFormInput>({
@@ -80,7 +80,6 @@ function SignUpPage() {
         password,
         redirect: false,
       });
-      console.log(customerDraft, 'hello');
       clearErrors('root');
       if (result?.ok) {
         router.push(`/`);

@@ -3,13 +3,13 @@ import { FieldError, SubmitHandler, useForm } from 'react-hook-form';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { signIn } from 'next-auth/react';
+import {toast} from "react-toastify";
 import ErrorMessage from '@/src/components/ErrorMessage';
 import NamesClients from '@/src/helpers/commercetools/consts';
 import { IFormInput } from '@/src/interfaces/IFormInput';
+import {getTokenForCrosscheck, signInForCrosscheck} from "@/src/api/signInForCrossCheck";
 import InputEmail from '../components/InputEmail';
 import InputPassword from '../components/InputPassword';
-import {getTokenForCrosscheck, signInForCrosscheck} from "@/src/api/signInForCrossCheck";
-import {toast} from "react-toastify";
 
 const showSuccess = () => {
   toast.success('Successful Login!', {
