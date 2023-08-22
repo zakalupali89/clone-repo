@@ -8,6 +8,22 @@ import NamesClients from '@/src/helpers/commercetools/consts';
 import { IFormInput } from '@/src/interfaces/IFormInput';
 import InputEmail from '../components/InputEmail';
 import InputPassword from '../components/InputPassword';
+import {getTokenForCrosscheck, signInForCrosscheck} from "@/src/api/signInForCrossCheck";
+import {toast} from "react-toastify";
+
+const showSuccess = () => {
+  toast.success('Successful Login!', {
+    position: toast.POSITION.TOP_CENTER,
+    autoClose: 3000,
+    hideProgressBar: true,
+  });
+};
+const showError = (message: string) => {
+  toast.error(message, {
+    position: toast.POSITION.TOP_CENTER,
+    hideProgressBar: true,
+  });
+};
 
 function SignInPage() {
   const form = useForm<IFormInput>({
@@ -30,6 +46,9 @@ function SignInPage() {
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     const { email, password } = data;
     try {
+      const token = await getTokenForCrosscheck({username: email, password})
+      await signInForCrosscheck({username: email, password}, token.access_token);
+
       const result = await signIn(NamesClients.PASSWORD, {
         username: email,
         password,
@@ -39,6 +58,7 @@ function SignInPage() {
       clearErrors('root');
       if (result?.ok) {
         router.push(`/`);
+        showSuccess();
       }
       if (result?.error) {
         setError('root.server', {
@@ -52,6 +72,7 @@ function SignInPage() {
           type: 'manual',
           message: e.message,
         } as FieldError);
+        showError(e.message);
       }
     }
   };
