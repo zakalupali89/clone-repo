@@ -7,6 +7,7 @@ export default withAuth(
     const { type } = req.nextauth.token || {};
     const url = req.nextUrl.clone();
     const { pathname } = url;
+    console.log('pathname', pathname, 'type', type)
     if (pathname === '/sign-in' && type === NamesClients.PASSWORD) {
       url.pathname = '/';
       return NextResponse.redirect(url);
